@@ -5,6 +5,7 @@ import LearnUseState from './learning/LearnUseState'
 import LearnUseEffect from './learning/LearnUseEffect'
 import LearnUseRef from './learning/LearnUseRef'
 import Login from './pages/Login/Login'
+import Register from './pages/Register/Register'
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
             <Route path='useRef' element={<LearnUseRef />} />
           </Route>
           <Route path='/login' element={<Login />} />
+          <Route path='/register' element={<Register />} />
         </Route>
       </Routes>
     </BrowserRouter>

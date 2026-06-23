@@ -1,12 +1,10 @@
 import { useForm, type SubmitHandler } from 'react-hook-form'
 import * as z from 'zod'
+import fr from 'zod/v4/locales/fr.js'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Card } from '@/components/ui/card'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 
-// Créer un page Register, lui donner une route, l'ajouter à la barre de navigation
-// Sur la page Register, je dois pouvoir renseigner mon email, un password et un input qui vérifie le password (confirmation afin de vérifier que les deux correspondent)
-// Le mdp doit avoir au moins une majuscule, une minuscule et un nombre
-
+z.config(fr())
 const schema = z.object({
   email: z.email(),
   password: z.string().min(4).max(64),
@@ -34,15 +32,27 @@ const Login = () => {
 
   return (
     <section className='flex min-h-[calc(100vh-12rem)] items-center justify-center'>
-      <form onSubmit={handleSubmit(onSubmitHandler)}>
-        <label htmlFor='email'>Email</label>
-        <input id='email' type='text' {...register('email', { required: true, minLength: 8 })} />
-        {errors.email && <p className='text-sm text-red-500'>{errors.email.message}</p>}
-        {/* <p className='text-sm text-red-500'>Error: {JSON.stringify(errors.email)}</p> */}
-        <label htmlFor='password'>Password</label>
-        <input id='password' type='text' {...register('password')} />
-        <button>Sign In</button>
-      </form>
+      <Card className='w-full max-w-md shadow-lg'>
+        <CardHeader className='text-center'>
+          <CardTitle className='text-2xl'>Welcome back</CardTitle>
+          <CardDescription>Sign in to access your personal hero roster.</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <form onSubmit={handleSubmit(onSubmitHandler)}>
+            <label htmlFor='email'>Email</label>
+            <input
+              id='email'
+              type='text'
+              {...register('email', { required: true, minLength: 8 })}
+            />
+            {errors.email && <p className='text-sm text-red-500'>{errors.email.message}</p>}
+            {/* <p className='text-sm text-red-500'>Error: {JSON.stringify(errors.email)}</p> */}
+            <label htmlFor='password'>Password</label>
+            <input id='password' type='text' {...register('password')} />
+            <button>Sign In</button>
+          </form>
+        </CardContent>
+      </Card>
     </section>
   )
 }

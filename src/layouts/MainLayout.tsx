@@ -35,6 +35,9 @@ const MainLayout = () => {
           <NavLink className={getActiveClassNames} to='/login'>
             Login
           </NavLink>
+          <NavLink className={getActiveClassNames} to='/register'>
+            Register
+          </NavLink>
         </nav>
       </header>
       <Outlet />
