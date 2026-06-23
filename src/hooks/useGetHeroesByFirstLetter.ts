@@ -12,7 +12,9 @@ export const useGetHeroesByFirstLetter = () => {
   const [isError, setIsError] = useState<boolean>(false)
 
   useEffect(() => {
-    getHeroesByFirstLetter('A')
+    // Abort controller
+    const controller = new AbortController()
+    getHeroesByFirstLetter('A', { signal: controller.signal })
       .then((data) => {
         setHeroes(data)
         setIsLoading(false)
@@ -21,6 +23,10 @@ export const useGetHeroesByFirstLetter = () => {
         setIsError(true)
         setError(error.message)
       })
+    return () => {
+      // désinscrit de l'appel http
+      controller.abort()
+    }
   }, [])
 
   const refetch = (letter: string) => {
