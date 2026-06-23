@@ -1,3 +1,11 @@
+import { Button } from '@/components/ui/button'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu'
 import { NavLink, Outlet, type NavLinkRenderProps } from 'react-router'
 
 const getActiveClassNames = ({ isActive }: NavLinkRenderProps) => {
@@ -23,15 +31,32 @@ const MainLayout = () => {
           <NavLink className={getActiveClassNames} to='/heroes'>
             Heroes
           </NavLink>
-          <NavLink className={getActiveClassNames} to='/learning/useState'>
-            useState
+          <NavLink className={getActiveClassNames} to='/squad'>
+            Squad
           </NavLink>
-          <NavLink className={getActiveClassNames} to='/learning/useEffect'>
-            useEffect
-          </NavLink>
-          <NavLink className={getActiveClassNames} to='/learning/useRef'>
-            useRef
-          </NavLink>
+          <DropdownMenu>
+            <DropdownMenuTrigger
+              render={
+                <Button variant='ghost' className='cursor-pointer'>
+                  Learning
+                </Button>
+              }
+            />
+            <DropdownMenuContent>
+              <DropdownMenuGroup>
+                <DropdownMenuItem>
+                  <NavLink to='/learning/useState'>useState</NavLink>
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                  <NavLink to='/learning/useEffect'>useEffect</NavLink>
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                  <NavLink to='/learning/useRef'>useRef</NavLink>
+                </DropdownMenuItem>
+              </DropdownMenuGroup>
+            </DropdownMenuContent>
+          </DropdownMenu>
+
           <NavLink className={getActiveClassNames} to='/login'>
             Login
           </NavLink>
@@ -40,7 +65,9 @@ const MainLayout = () => {
           </NavLink>
         </nav>
       </header>
-      <Outlet />
+      <main className='mx-auto min-h-[calc(100vh-4.5rem)] w-full max-w-7xl px-4 py-8 sm:px-6 lg:px-8'>
+        <Outlet />
+      </main>
       <footer>Created with React - 2026</footer>
     </>
   )
