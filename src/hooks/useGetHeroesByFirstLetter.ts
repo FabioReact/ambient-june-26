@@ -12,7 +12,6 @@ export const useGetHeroesByFirstLetter = () => {
   const [isError, setIsError] = useState<boolean>(false)
 
   useEffect(() => {
-    // Abort controller
     const controller = new AbortController()
     getHeroesByFirstLetter('A', { signal: controller.signal })
       .then((data) => {
