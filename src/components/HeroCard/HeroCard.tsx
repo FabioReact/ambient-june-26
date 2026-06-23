@@ -4,15 +4,17 @@ import type { Hero } from '@/types/hero'
 import { Button } from '../ui/button'
 import { ShieldPlus } from 'lucide-react'
 import Check from '../icons/Check'
+import { useSquadContext } from '@/context/squad-context'
 
 type HeroCardProps = {
   hero: Hero
-  addToSquad: (id: number) => void
-  isInSquad: boolean
-  isFull: boolean
 }
 
-const HeroCard = ({ hero, addToSquad, isInSquad, isFull }: HeroCardProps) => {
+const HeroCard = ({ hero }: HeroCardProps) => {
+  const { squad, addToSquad } = useSquadContext()
+  const isInSquad = squad.includes(hero)
+  const isFull = squad.length === 3
+
   const stats = [
     {
       label: 'INT',
@@ -79,7 +81,7 @@ const HeroCard = ({ hero, addToSquad, isInSquad, isFull }: HeroCardProps) => {
           className='w-full cursor-pointer'
           variant={isInSquad ? 'secondary' : 'outline'}
           disabled={isInSquad || isFull}
-          onClick={() => addToSquad(hero.id)}
+          onClick={() => addToSquad(hero)}
         >
           {isInSquad ? <Check /> : <ShieldPlus />}
           {isInSquad ? 'In Squad' : isFull ? 'Squad full' : 'Add to squad'}

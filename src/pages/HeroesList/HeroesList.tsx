@@ -7,7 +7,6 @@ import HeroCard from '@/components/HeroCard/HeroCard'
 const alphabet = generateAlphabet()
 
 const HeroesList = () => {
-  const [squad, setSquad] = useState<number[]>([])
   const [selectedLetter, setSelectedLetter] = useState<string>('A')
   const { heroes, isLoading, isError, error, refetch } = useGetHeroesByFirstLetter()
 
@@ -36,14 +35,6 @@ const HeroesList = () => {
         ))}
       </ul>
       <section>
-        <h2 className='my-10'>Heroes in Squad</h2>
-        <ul className='flex justify-center gap-10'>
-          {squad.map((id) => (
-            <li key={id}>{id}</li>
-          ))}
-        </ul>
-      </section>
-      <section>
         {isError && <p className='text-red-500'>An error occured: {error}</p>}
         {isLoading && !isError ? <p>Loading...</p> : null}
         {!isError && (
@@ -59,15 +50,6 @@ const HeroesList = () => {
               <HeroCard
                 key={hero.id}
                 hero={hero}
-                isInSquad={squad.includes(hero.id)}
-                isFull={squad.length === 3}
-                addToSquad={(id: number) => {
-                  setSquad((prevSquad) => {
-                    if (prevSquad.length === 3) return prevSquad
-                    if (prevSquad.includes(id)) return prevSquad
-                    return [...prevSquad, id]
-                  })
-                }}
               />
             ))}
           </div>

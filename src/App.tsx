@@ -9,27 +9,30 @@ import Register from './pages/Register/Register'
 import Squad from './pages/Squad/Squad'
 import Home from './pages/Home/Home'
 import CounterContextProvider from './providers/CounterContextProvider'
+import SquadContextProvider from './providers/SquadContextProvider'
 
 function App() {
   return (
-    <CounterContextProvider>
-      <BrowserRouter>
-        <Routes>
-          <Route element={<MainLayout />}>
-            <Route path='/' element={<Home />} />
-            <Route path='/heroes' element={<HeroesList />} />
-            <Route path='/squad' element={<Squad />} />
-            <Route path='/learning'>
-              <Route path='useState' element={<LearnUseState />} />
-              <Route path='useEffect' element={<LearnUseEffect />} />
-              <Route path='useRef' element={<LearnUseRef />} />
+    <SquadContextProvider>
+      <CounterContextProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route element={<MainLayout />}>
+              <Route path='/' element={<Home />} />
+              <Route path='/heroes' element={<HeroesList />} />
+              <Route path='/squad' element={<Squad />} />
+              <Route path='/learning'>
+                <Route path='useState' element={<LearnUseState />} />
+                <Route path='useEffect' element={<LearnUseEffect />} />
+                <Route path='useRef' element={<LearnUseRef />} />
+              </Route>
+              <Route path='/login' element={<Login />} />
+              <Route path='/register' element={<Register />} />
             </Route>
-            <Route path='/login' element={<Login />} />
-            <Route path='/register' element={<Register />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
-    </CounterContextProvider>
+          </Routes>
+        </BrowserRouter>
+      </CounterContextProvider>
+    </SquadContextProvider>
   )
 }
 
