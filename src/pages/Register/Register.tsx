@@ -1,10 +1,10 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { Button } from '@base-ui/react/button'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm, type SubmitHandler } from 'react-hook-form'
 import { type Inputs, schema } from './schema'
+import { Button } from '@/components/ui/button'
 
 // Créer un page Register, lui donner une route, l'ajouter à la barre de navigation
 // Sur la page Register, je dois pouvoir renseigner mon email, un password et un input qui vérifie le password (confirmation afin de vérifier que les deux correspondent)

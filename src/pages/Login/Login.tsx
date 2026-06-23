@@ -3,6 +3,9 @@ import * as z from 'zod'
 import fr from 'zod/v4/locales/fr.js'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Label } from '@/components/ui/label'
+import { Input } from '@/components/ui/input'
+import { Button } from '@/components/ui/button'
 
 z.config(fr())
 const schema = z.object({
@@ -38,18 +41,24 @@ const Login = () => {
           <CardDescription>Sign in to access your personal hero roster.</CardDescription>
         </CardHeader>
         <CardContent>
-          <form onSubmit={handleSubmit(onSubmitHandler)}>
-            <label htmlFor='email'>Email</label>
-            <input
-              id='email'
-              type='text'
-              {...register('email', { required: true, minLength: 8 })}
-            />
-            {errors.email && <p className='text-sm text-red-500'>{errors.email.message}</p>}
-            {/* <p className='text-sm text-red-500'>Error: {JSON.stringify(errors.email)}</p> */}
-            <label htmlFor='password'>Password</label>
-            <input id='password' type='text' {...register('password')} />
-            <button>Sign In</button>
+          <form className='space-y-5' onSubmit={handleSubmit(onSubmitHandler)}>
+            <fieldset className='space-y-2'>
+              <Label htmlFor='email'>Email</Label>
+              <Input
+                id='email'
+                type='text'
+                {...register('email', { required: true, minLength: 8 })}
+              />
+              {errors.email && <p className='text-sm text-red-500'>{errors.email.message}</p>}
+            </fieldset>
+            <fieldset className='space-y-2'>
+              <Label htmlFor='password'>Password</Label>
+              <Input id='password' type='text' {...register('password')} />
+              {errors.password && <p className='text-sm text-red-500'>{errors.password.message}</p>}
+            </fieldset>
+            <Button type='submit' className='w-full'>
+              Sign In
+            </Button>
           </form>
         </CardContent>
       </Card>
