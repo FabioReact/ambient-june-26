@@ -1,27 +1,31 @@
+import { getHeroesByName } from '@/api/heroes'
 import ErrorState from '@/components/ErrorState/ErrorState'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { useGetHeroesByName } from '@/hooks/useGetHeroesByName'
 import type { Hero } from '@/types/hero'
-import { useRef } from 'react'
-
-// Pour transmettre une information d'un parent à un children je peux utiliser les props
-// Pour transmettre une information du children vers le parent, je ne peux le faire que si le parent me donne une fonction callback
+import { useQuery } from '@tanstack/react-query'
+import { useRef, useState } from 'react'
 
 type SelectHeroProps = {
   onSelect: (hero: Hero) => void
 }
 
 const SelectHero = ({ onSelect }: SelectHeroProps) => {
-  const { isLoading, isError, error, searchHero, data } = useGetHeroesByName()
   const inputRef = useRef<HTMLInputElement>(null)
+  const [searchTerm, setSearchTerm] = useState('')
+
+  const { isLoading, isError, error, data, refetch } = useQuery({
+    queryKey: ['heroes', searchTerm],
+    queryFn: () => getHeroesByName(searchTerm),
+    enabled: Boolean(searchTerm),
+  })
 
   const onSubmitHandler = (event: React.SubmitEvent) => {
     event.preventDefault()
     const name = inputRef.current?.value
-    if (name) searchHero(name)
+    if (name) setSearchTerm(name)
   }
 
   return (
@@ -46,8 +50,7 @@ const SelectHero = ({ onSelect }: SelectHeroProps) => {
               error={error}
               title='Unable to search heroes'
               onRetry={() => {
-                const name = inputRef.current?.value
-                if (name) searchHero(name)
+                refetch()
               }}
             />
           </div>
