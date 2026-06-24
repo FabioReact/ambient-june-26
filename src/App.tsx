@@ -10,6 +10,7 @@ import Squad from './pages/Squad/Squad'
 import Home from './pages/Home/Home'
 import CounterContextProvider from './providers/CounterContextProvider'
 import SquadContextProvider from './providers/SquadContextProvider'
+import Battle from './pages/Battle/Battle'
 
 // Créer un page battle
 // Créer un composant qui nous permet de chercher un héro et le sélectionner
@@ -28,6 +29,7 @@ function App() {
               <Route path='/' element={<Home />} />
               <Route path='/heroes' element={<HeroesList />} />
               <Route path='/squad' element={<Squad />} />
+              <Route path='/battle' element={<Battle />} />
               <Route path='/learning'>
                 <Route path='useState' element={<LearnUseState />} />
                 <Route path='useEffect' element={<LearnUseEffect />} />

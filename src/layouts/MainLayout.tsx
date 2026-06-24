@@ -34,6 +34,9 @@ const MainLayout = () => {
           <NavLink className={getActiveClassNames} to='/squad'>
             Squad
           </NavLink>
+          <NavLink className={getActiveClassNames} to='/battle'>
+            Battle
+          </NavLink>
           <DropdownMenu>
             <DropdownMenuTrigger
               render={
