@@ -60,7 +60,7 @@ export const setUnauthorizedHandler = (handler?: () => void) => {
 }
 
 export const api = axios.create({
-  baseURL: 'http://localhost:4000',
+  baseURL: 'http://localhost:3001',
 })
 
 api.interceptors.response.use(

@@ -1,4 +1,11 @@
 {
+  "users": [
+    {
+      "email": "fabio@email.com",
+      "password": "$2a$10$LQGRe3wApvAotAaJEQSR8uaNOwHYqgiBb/io12XIBUx6NQUrrEg5C",
+      "id": 1
+    }
+  ],
   "heroes": [
     {
       "id": 1,

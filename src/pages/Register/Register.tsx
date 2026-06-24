@@ -5,6 +5,9 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm, type SubmitHandler } from 'react-hook-form'
 import { type Inputs, schema } from './schema'
 import { Button } from '@/components/ui/button'
+import { useMutation } from '@tanstack/react-query'
+import { registerUser } from '@/api/users'
+import { toast } from 'react-toastify'
 
 // Créer un page Register, lui donner une route, l'ajouter à la barre de navigation
 // Sur la page Register, je dois pouvoir renseigner mon email, un password et un input qui vérifie le password (confirmation afin de vérifier que les deux correspondent)
@@ -19,8 +22,19 @@ const Register = () => {
     resolver: zodResolver(schema),
   })
 
+  const { mutate } = useMutation({
+    mutationKey: ['register'],
+    mutationFn: (data: Omit<Inputs, 'confirmPassword'>) => registerUser(data),
+    onSuccess: (data) => {
+      toast.success(`User ${data.user.email} registered successfully`)
+    },
+    onError: (error) => {
+      toast.error(error.message)
+    },
+  })
+
   const onSubmit: SubmitHandler<Inputs> = (formData) => {
-    console.log(formData)
+    mutate({ email: formData.email, password: formData.password })
   }
 
   return (

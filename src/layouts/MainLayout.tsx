@@ -6,6 +6,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
+import { ToastContainer } from 'react-toastify'
 import { NavLink, Outlet, type NavLinkRenderProps } from 'react-router'
 
 const getActiveClassNames = ({ isActive }: NavLinkRenderProps) => {
@@ -69,6 +70,7 @@ const MainLayout = () => {
         </nav>
       </header>
       <main className='mx-auto min-h-[calc(100vh-4.5rem)] w-full max-w-7xl px-4 py-8 sm:px-6 lg:px-8'>
+        <ToastContainer />
         <Outlet />
       </main>
       <footer>Created with React - 2026</footer>
