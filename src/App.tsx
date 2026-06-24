@@ -11,37 +11,35 @@ import Home from './pages/Home/Home'
 import CounterContextProvider from './providers/CounterContextProvider'
 import SquadContextProvider from './providers/SquadContextProvider'
 import Battle from './pages/Battle/Battle'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
-// Créer un page battle
-// Créer un composant qui nous permet de chercher un héro et le sélectionner
-// Si j'ai plusieurs résultats, afficher les différents résultats pour que l'utilisateur choississe le hero voulu
-// Si un seul résultat afficher directement la card
-// Si deux heros ont été sélectionnés, afficher un bouton Battle
-// Après avoir cliqué sur le bouton battle, donner un héro victorieux. Je dois avoir un moyen de reset pour revenir à la page initiale
+const queryClient = new QueryClient()
 
 function App() {
   return (
-    <SquadContextProvider>
-      <CounterContextProvider>
-        <BrowserRouter>
-          <Routes>
-            <Route element={<MainLayout />}>
-              <Route path='/' element={<Home />} />
-              <Route path='/heroes' element={<HeroesList />} />
-              <Route path='/squad' element={<Squad />} />
-              <Route path='/battle' element={<Battle />} />
-              <Route path='/learning'>
-                <Route path='useState' element={<LearnUseState />} />
-                <Route path='useEffect' element={<LearnUseEffect />} />
-                <Route path='useRef' element={<LearnUseRef />} />
+    <QueryClientProvider client={queryClient}>
+      <SquadContextProvider>
+        <CounterContextProvider>
+          <BrowserRouter>
+            <Routes>
+              <Route element={<MainLayout />}>
+                <Route path='/' element={<Home />} />
+                <Route path='/heroes' element={<HeroesList />} />
+                <Route path='/squad' element={<Squad />} />
+                <Route path='/battle' element={<Battle />} />
+                <Route path='/learning'>
+                  <Route path='useState' element={<LearnUseState />} />
+                  <Route path='useEffect' element={<LearnUseEffect />} />
+                  <Route path='useRef' element={<LearnUseRef />} />
+                </Route>
+                <Route path='/login' element={<Login />} />
+                <Route path='/register' element={<Register />} />
               </Route>
-              <Route path='/login' element={<Login />} />
-              <Route path='/register' element={<Register />} />
-            </Route>
-          </Routes>
-        </BrowserRouter>
-      </CounterContextProvider>
-    </SquadContextProvider>
+            </Routes>
+          </BrowserRouter>
+        </CounterContextProvider>
+      </SquadContextProvider>
+    </QueryClientProvider>
   )
 }
 

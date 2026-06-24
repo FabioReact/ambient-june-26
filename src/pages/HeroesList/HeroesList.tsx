@@ -1,18 +1,29 @@
 import { useState } from 'react'
 import { generateAlphabet } from './utils'
 import { Button } from '@/components/ui/button'
-import { useGetHeroesByFirstLetter } from '@/hooks/useGetHeroesByFirstLetter'
 import HeroCard from '@/components/HeroCard/HeroCard'
+import IsLoading from '@/components/IsLoading/IsLoading'
+import { useQuery } from '@tanstack/react-query'
+import { getHeroesByFirstLetter } from '@/api/heroes'
 
 const alphabet = generateAlphabet()
 
 const HeroesList = () => {
   const [selectedLetter, setSelectedLetter] = useState<string>('A')
-  const { heroes, isLoading, isError, error, refetch } = useGetHeroesByFirstLetter()
+
+  const {
+    isError,
+    error,
+    isLoading,
+    isFetching,
+    data: heroes,
+  } = useQuery({
+    queryKey: ['heroes', selectedLetter], // heroes/a, heroes/b
+    queryFn: () => getHeroesByFirstLetter(selectedLetter),
+  })
 
   const onSelectLetter = (letter: string) => {
     setSelectedLetter(letter)
-    refetch(letter)
   }
 
   return (
@@ -34,25 +45,16 @@ const HeroesList = () => {
           </li>
         ))}
       </ul>
-      <section>
-        {isError && <p className='text-red-500'>An error occured: {error}</p>}
-        {isLoading && !isError ? <p>Loading...</p> : null}
+      <section className='flex justify-center'>
+        {isError && <p className='text-red-500'>An error occured: {error.message}</p>}
         {!isError && (
-          // <ul className={isLoading ? 'opacity-50' : undefined}>
-          //   {heroes?.map((hero) => (
-          //     <li key={hero.id}>
-          //       {hero.id} - {hero.name}
-          //     </li>
-          //   ))}
-          // </ul>
-          <div className='grid grid-cols-1 justify-items-center gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'>
-            {heroes?.map((hero) => (
-              <HeroCard
-                key={hero.id}
-                hero={hero}
-              />
-            ))}
-          </div>
+          <IsLoading loading={isLoading || isFetching}>
+            <div className='grid grid-cols-1 justify-items-center gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'>
+              {heroes?.map((hero) => (
+                <HeroCard key={hero.id} hero={hero} />
+              ))}
+            </div>
+          </IsLoading>
         )}
       </section>
     </section>

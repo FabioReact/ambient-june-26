@@ -1,8 +1,8 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card'
+import { Card, CardAction, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card'
 import { Badge } from '../ui/badge'
 import type { Hero } from '@/types/hero'
 import { Button } from '../ui/button'
-import { ShieldPlus } from 'lucide-react'
+import { ShieldPlus, Star } from 'lucide-react'
 import Check from '../icons/Check'
 import { useSquadContext } from '@/context/squad-context'
 
@@ -68,6 +68,9 @@ const HeroCard = ({ hero }: HeroCardProps) => {
           <span className='ml-1.5 text-sm font-normal text-muted-foreground'>#{hero.id}</span>
         </CardTitle>
         <CardDescription>{hero.biography['full-name'] || 'Unknown identity'}</CardDescription>
+        <CardAction>
+          <Star fill="gold" color='gold' />
+        </CardAction>
       </CardHeader>
       <CardContent className='flex flex-wrap gap-1.5 border-t mt-3 py-3'>
         {stats.map(({ label, value, className }) => (
