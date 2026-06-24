@@ -40,6 +40,7 @@ export const useGetHeroesByFirstLetter = () => {
       .catch((error) => {
         setIsError(true)
         setError(error.message)
+        setIsLoading(false)
       })
   }
 
