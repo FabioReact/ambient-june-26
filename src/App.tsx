@@ -11,6 +11,13 @@ import Home from './pages/Home/Home'
 import CounterContextProvider from './providers/CounterContextProvider'
 import SquadContextProvider from './providers/SquadContextProvider'
 
+// Créer un page battle
+// Créer un composant qui nous permet de chercher un héro et le sélectionner
+// Si j'ai plusieurs résultats, afficher les différents résultats pour que l'utilisateur choississe le hero voulu
+// Si un seul résultat afficher directement la card
+// Si deux heros ont été sélectionnés, afficher un bouton Battle
+// Après avoir cliqué sur le bouton battle, donner un héro victorieux. Je dois avoir un moyen de reset pour revenir à la page initiale
+
 function App() {
   return (
     <SquadContextProvider>
