@@ -8,10 +8,7 @@ import { Button } from '@/components/ui/button'
 import { useMutation } from '@tanstack/react-query'
 import { registerUser } from '@/api/users'
 import { toast } from 'react-toastify'
-
-// Créer un page Register, lui donner une route, l'ajouter à la barre de navigation
-// Sur la page Register, je dois pouvoir renseigner mon email, un password et un input qui vérifie le password (confirmation afin de vérifier que les deux correspondent)
-// Le mdp doit avoir au moins une majuscule, une minuscule et un nombre
+import { useAuthContext } from '@/context/auth-context'
 
 const Register = () => {
   const {
@@ -21,12 +18,14 @@ const Register = () => {
   } = useForm<Inputs>({
     resolver: zodResolver(schema),
   })
+  const { loginUserContext } = useAuthContext()
 
   const { mutate } = useMutation({
     mutationKey: ['register'],
     mutationFn: (data: Omit<Inputs, 'confirmPassword'>) => registerUser(data),
     onSuccess: (data) => {
       toast.success(`User ${data.user.email} registered successfully`)
+      loginUserContext({ email: data.user.email, id: 1, accessToken: data.accessToken })
     },
     onError: (error) => {
       toast.error(error.message)

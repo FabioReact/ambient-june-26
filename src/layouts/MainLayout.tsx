@@ -60,6 +60,9 @@ const MainLayout = () => {
               </DropdownMenuContent>
             </DropdownMenu>
 
+            <NavLink className={getActiveClassNames} to='/profile'>
+              Profile
+            </NavLink>
             <NavLink className={getActiveClassNames} to='/login'>
               Login
             </NavLink>
