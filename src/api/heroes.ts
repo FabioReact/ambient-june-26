@@ -11,3 +11,9 @@ export const getHeroesByName = (name: string, options?: RequestInit): Promise<He
     if (response.ok) return response.json()
   })
 }
+
+export const getHeroById = (id: string, options?: RequestInit): Promise<Hero> => {
+  return fetch(`http://localhost:3001/heroes/${id}`, options).then((response) => {
+    if (response.ok) return response.json()
+  })
+}

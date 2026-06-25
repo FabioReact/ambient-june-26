@@ -5,11 +5,13 @@ import HeroCard from '@/components/HeroCard/HeroCard'
 import IsLoading from '@/components/IsLoading/IsLoading'
 import { useQuery } from '@tanstack/react-query'
 import { getHeroesByFirstLetter } from '@/api/heroes'
+import { useSearchParams } from 'react-router'
 
 const alphabet = generateAlphabet()
 
 const HeroesList = () => {
-  const [selectedLetter, setSelectedLetter] = useState<string>('A')
+  const [searchParams, setSearchParams] = useSearchParams()
+  const [selectedLetter, setSelectedLetter] = useState<string>(searchParams.get('q') || 'A')
 
   const {
     isError,
@@ -23,6 +25,7 @@ const HeroesList = () => {
   })
 
   const onSelectLetter = (letter: string) => {
+    setSearchParams({ q: letter })
     setSelectedLetter(letter)
   }
 

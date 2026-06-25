@@ -5,6 +5,7 @@ import { Button } from '../ui/button'
 import { ShieldPlus, Star } from 'lucide-react'
 import Check from '../icons/Check'
 import { useSquadContext } from '@/context/squad-context'
+import { Link } from 'react-router'
 
 type HeroCardProps = {
   hero: Hero
@@ -65,6 +66,9 @@ const HeroCard = ({ hero }: HeroCardProps) => {
       </div>
       <CardHeader className='pt-4'>
         <CardTitle className='text-lg'>
+          <Link to={String(hero.id)} className='transition-colors hover:text-primary'>
+            {hero.name}
+          </Link>
           <span className='ml-1.5 text-sm font-normal text-muted-foreground'>#{hero.id}</span>
         </CardTitle>
         <CardDescription>{hero.biography['full-name'] || 'Unknown identity'}</CardDescription>

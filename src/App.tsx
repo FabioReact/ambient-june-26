@@ -16,6 +16,7 @@ import AuthContextProvider from './providers/AuthContextProvider'
 import Profile from './pages/Profile/Profile'
 import PrivateRoute from './hoc/PrivateRoute'
 import Logout from './pages/Logout/Logout'
+import HeroDetails from './pages/HeroDetails/HeroDetails'
 
 const queryClient = new QueryClient()
 
@@ -30,6 +31,7 @@ function App() {
                 <Route element={<MainLayout />}>
                   <Route path='/' element={<Home />} />
                   <Route path='/heroes' element={<HeroesList />} />
+                  <Route path='/heroes/:id' element={<HeroDetails />} />
                   <Route path='/squad' element={<Squad />} />
                   <Route path='/battle' element={<Battle />} />
                   <Route path='/learning'>
@@ -43,6 +45,7 @@ function App() {
                   <Route path='/login' element={<Login />} />
                   <Route path='/register' element={<Register />} />
                   <Route path='/logout' element={<Logout />} />
+                  <Route path='*' element={<section>Page 404</section>} />
                 </Route>
               </Routes>
             </BrowserRouter>
