@@ -84,6 +84,9 @@ const Navigation = () => {
                 <DropdownMenuItem>
                   <NavLink to='/learning/useRef'>useRef</NavLink>
                 </DropdownMenuItem>
+                <DropdownMenuItem>
+                  <NavLink to='/learning/optimisations'>Optimisations</NavLink>
+                </DropdownMenuItem>
               </DropdownMenuGroup>
             </DropdownMenuContent>
           </DropdownMenu>
