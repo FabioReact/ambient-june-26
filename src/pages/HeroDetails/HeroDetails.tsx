@@ -1,25 +1,15 @@
-import { getHeroById } from '@/api/heroes'
 import ErrorState from '@/components/ErrorState/ErrorState'
 import IsLoading from '@/components/IsLoading/IsLoading'
 import { Badge } from '@/components/ui/badge'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { useQuery } from '@tanstack/react-query'
+import { useGetHeroByIdQuery } from '@/redux/services/heroesApi'
 import { BriefcaseBusiness, Eye, MapPin, Ruler, Star, Users, Weight } from 'lucide-react'
 import React from 'react'
 import { useParams } from 'react-router'
 
 const HeroDetails = () => {
   const { id } = useParams()
-
-  const {
-    error,
-    data: hero,
-    isError,
-    isLoading,
-  } = useQuery({
-    queryKey: ['hero', id],
-    queryFn: () => getHeroById(id!),
-  })
+  const { error, isError, isLoading, data: hero } = useGetHeroByIdQuery(id!)
 
   return (
     <section className='space-y-5'>
