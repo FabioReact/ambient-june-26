@@ -8,7 +8,8 @@ import { Button } from '@/components/ui/button'
 import { useMutation } from '@tanstack/react-query'
 import { registerUser } from '@/api/users'
 import { toast } from 'react-toastify'
-import { useAuthContext } from '@/context/auth-context'
+import { useAppDispatch } from '@/redux/app/hooks'
+import { loginUserRedux } from '@/redux/features/auth/authSlice'
 
 const Register = () => {
   const {
@@ -18,14 +19,16 @@ const Register = () => {
   } = useForm<Inputs>({
     resolver: zodResolver(schema),
   })
-  const { loginUserContext } = useAuthContext()
+  const dispatch = useAppDispatch()
 
   const { mutate } = useMutation({
     mutationKey: ['register'],
     mutationFn: (data: Omit<Inputs, 'confirmPassword'>) => registerUser(data),
     onSuccess: (data) => {
       toast.success(`User ${data.user.email} registered successfully`)
-      loginUserContext({ email: data.user.email, id: data.user.id, accessToken: data.accessToken })
+      dispatch(
+        loginUserRedux({ email: data.user.email, id: data.user.id, accessToken: data.accessToken }),
+      )
     },
     onError: (error) => {
       toast.error(error.message)

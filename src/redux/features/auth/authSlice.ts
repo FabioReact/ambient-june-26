@@ -43,7 +43,6 @@ export const authSlice = createSlice({
       state.accessToken = undefined
       state.connected = false
     },
-
   },
 })
 

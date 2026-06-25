@@ -1,12 +1,13 @@
-import { useAuthContext } from '@/context/auth-context'
+import { useAppDispatch } from '@/redux/app/hooks'
+import { logoutUserRedux } from '@/redux/features/auth/authSlice'
 import { useLayoutEffect } from 'react'
 import { Navigate } from 'react-router'
 
 const Logout = () => {
-  const { logoutUserContext } = useAuthContext()
+  const dispatch = useAppDispatch()
 
   useLayoutEffect(() => {
-    logoutUserContext()
+    dispatch(logoutUserRedux()) // dispatch({ type: "logoutUserRedux", payload: undefined })
   }, [])
 
   return <Navigate to='/login' replace />

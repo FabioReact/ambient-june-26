@@ -6,7 +6,6 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { useAuthContext } from '@/context/auth-context'
 import { useAppSelector } from '@/redux/app/hooks'
 import { NavLink, type NavLinkRenderProps } from 'react-router'
 
@@ -44,7 +43,6 @@ const links = [
 ]
 
 const Navigation = () => {
-  // const { connected } = useAuthContext()
   const connected = useAppSelector((state) => state.auth.connected)
   return (
     <header className='sticky top-0 z-20 border-b border-border/70 bg-background/80 backdrop-blur-xl'>

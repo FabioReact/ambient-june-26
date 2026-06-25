@@ -1,8 +1,14 @@
 import { Button } from '@/components/ui/button'
-import { useAuthContext } from '@/context/auth-context'
+import { useAppDispatch, useAppSelector } from '@/redux/app/hooks'
+import { logoutUserRedux } from '@/redux/features/auth/authSlice'
 
 const Profile = () => {
-  const { email, id, accessToken, logoutUserContext } = useAuthContext()
+  const { email, id, accessToken } = useAppSelector((state) => state.auth)
+  const dispatch = useAppDispatch()
+
+  const onLogout = () => {
+    dispatch(logoutUserRedux())
+  }
 
   return (
     <section className='space-y-6'>
@@ -13,7 +19,7 @@ const Profile = () => {
           <p className='mt-2 text-muted-foreground break-all'>
             {accessToken} - {email} - {id}
           </p>
-          <Button onClick={logoutUserContext}>Logout</Button>
+          <Button onClick={onLogout}>Logout</Button>
         </div>
       </div>
     </section>
