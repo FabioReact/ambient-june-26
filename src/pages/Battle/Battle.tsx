@@ -5,11 +5,14 @@ import { useState } from 'react'
 import type { Hero } from '@/types/hero'
 import HeroCard from '@/components/HeroCard/HeroCard'
 import { fight } from './utils'
+import { useAppDispatch } from '@/redux/app/hooks'
+import { addBattleHistoryEntry } from '@/redux/features/battle-history/battleHistorySlice'
 
 const Battle = () => {
   const [hero, setHero] = useState<Hero | null>(null)
   const [challenger, setChallenger] = useState<Hero | null>(null)
   const [winner, setWinner] = useState<Hero | null>(null)
+  const dispatch = useAppDispatch()
 
   const onSelectHero = (hero: Hero) => {
     setHero(hero)
@@ -22,6 +25,12 @@ const Battle = () => {
   const onFight = () => {
     if (!hero || !challenger) return
     const result = fight(hero, challenger)
+    const loserName = hero.id === result.id ? challenger.name : hero.name
+    const id = Math.random().toString(8).substring(2, 15) + Math.random().toString(8).substring(2, 15)
+    // use temporal api
+    // const datetime = Temporal.Now.instant().toString()
+    const datetime = new Date().toISOString()
+    dispatch(addBattleHistoryEntry({ id, winner: result.name, loser: loserName, datetime }))
     setWinner(result)
   }
 

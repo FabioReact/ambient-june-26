@@ -4,6 +4,7 @@ import { logoutUserRedux } from '@/redux/features/auth/authSlice'
 
 const Profile = () => {
   const { email, id, accessToken } = useAppSelector((state) => state.auth)
+  const battleHistory = useAppSelector((state) => state.battleHistory)
   const dispatch = useAppDispatch()
 
   const onLogout = () => {
@@ -21,6 +22,28 @@ const Profile = () => {
           </p>
           <Button onClick={onLogout}>Logout</Button>
         </div>
+      </div>
+      {/* Show list of battle history entries */}
+      <div className='space-y-4'>
+        <p className='text-sm font-semibold tracking-[0.2em] text-primary uppercase'>
+          Battle history
+        </p>
+        {battleHistory.length === 0 && (
+          <p className='text-muted-foreground'>No battle history found</p>
+        )}
+        {battleHistory.map((entry) => (
+          <div
+            key={entry.id}
+            className='flex items-center justify-between rounded-lg border border-border/70 bg-background/80 p-4 shadow-sm'
+          >
+            <div className='flex flex-col gap-1'>
+              <p className='text-sm font-semibold tracking-tight'>
+                Winner: {entry.winner} - Loser: {entry.loser}
+              </p>
+              <p className='text-xs text-muted-foreground'>{entry.datetime}</p>
+            </div>
+          </div>
+        ))}
       </div>
     </section>
   )
