@@ -1,12 +1,11 @@
-import { getHeroesByName } from '@/api/heroes'
 import ErrorState from '@/components/ErrorState/ErrorState'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { useLazyGetHeroesByNameQuery } from '@/redux/services/heroesApi'
 import type { Hero } from '@/types/hero'
-import { useQuery } from '@tanstack/react-query'
-import { useRef, useState } from 'react'
+import { useRef } from 'react'
 
 type SelectHeroProps = {
   onSelect: (hero: Hero) => void
@@ -14,18 +13,23 @@ type SelectHeroProps = {
 
 const SelectHero = ({ onSelect }: SelectHeroProps) => {
   const inputRef = useRef<HTMLInputElement>(null)
-  const [searchTerm, setSearchTerm] = useState('')
+  // const [searchTerm, setSearchTerm] = useState('')
 
-  const { isLoading, isError, error, data, refetch } = useQuery({
-    queryKey: ['heroes', searchTerm],
-    queryFn: () => getHeroesByName(searchTerm),
-    enabled: Boolean(searchTerm),
-  })
+  // const { isLoading, isError, error, data, refetch } = useQuery({
+  //   queryKey: ['heroes', searchTerm],
+  //   queryFn: () => getHeroesByName(searchTerm),
+  //   enabled: Boolean(searchTerm),
+  // })
+
+  const [getHeroesByName, { isLoading, isError, error, data }] = useLazyGetHeroesByNameQuery()
 
   const onSubmitHandler = (event: React.SubmitEvent) => {
     event.preventDefault()
     const name = inputRef.current?.value
-    if (name) setSearchTerm(name)
+    // if (name) setSearchTerm(name)
+    if (name) {
+      getHeroesByName(name)
+    }
   }
 
   return (
@@ -50,7 +54,7 @@ const SelectHero = ({ onSelect }: SelectHeroProps) => {
               error={error}
               title='Unable to search heroes'
               onRetry={() => {
-                refetch()
+                getHeroesByName(inputRef.current?.value || '')
               }}
             />
           </div>

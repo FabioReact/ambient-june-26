@@ -3,9 +3,8 @@ import { generateAlphabet } from './utils'
 import { Button } from '@/components/ui/button'
 import HeroCard from '@/components/HeroCard/HeroCard'
 import IsLoading from '@/components/IsLoading/IsLoading'
-import { useQuery } from '@tanstack/react-query'
-import { getHeroesByFirstLetter } from '@/api/heroes'
 import { useSearchParams } from 'react-router'
+import { useGetHeroesByFirstLetterQuery } from '@/redux/services/heroesApi'
 
 const alphabet = generateAlphabet()
 
@@ -19,10 +18,7 @@ const HeroesList = () => {
     isLoading,
     isFetching,
     data: heroes,
-  } = useQuery({
-    queryKey: ['heroes', selectedLetter], // heroes/a, heroes/b
-    queryFn: () => getHeroesByFirstLetter(selectedLetter),
-  })
+  } = useGetHeroesByFirstLetterQuery(selectedLetter)
 
   const onSelectLetter = (letter: string) => {
     setSearchParams({ q: letter })
@@ -49,7 +45,11 @@ const HeroesList = () => {
         ))}
       </ul>
       <section className='flex justify-center'>
-        {isError && <p className='text-red-500'>An error occured: {error.message}</p>}
+        {isError && (
+          <p className='text-red-500'>
+            An error occured: {'message' in error ? error.message : ''}
+          </p>
+        )}
         {!isError && (
           <IsLoading loading={isLoading || isFetching}>
             <div className='grid grid-cols-1 justify-items-center gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'>
