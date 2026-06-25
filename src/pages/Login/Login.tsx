@@ -6,6 +6,10 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
+import { useAuthContext } from '@/context/auth-context'
+import { useMutation } from '@tanstack/react-query'
+import { loginUser } from '@/api/users'
+import { toast } from 'react-toastify'
 
 z.config(fr())
 const schema = z.object({
@@ -23,12 +27,24 @@ const Login = () => {
   } = useForm<Inputs>({
     resolver: zodResolver(schema),
   })
-  // const emailRef = useRef<HTMLInputElement>(null) // Non controllé
-  //   const [password, setPassword] = useState('secret') // Controllé
+  const { loginUserContext } = useAuthContext()
+
+  const { mutate } = useMutation({
+    mutationKey: ['login'],
+    mutationFn: (data: Inputs) => loginUser(data),
+    onSuccess: (data) => {
+      toast.success(`User ${data.user.email} logged successfully`)
+      loginUserContext({ email: data.user.email, id: data.user.id, accessToken: data.accessToken })
+    },
+    onError: (error) => {
+      toast.error(error.message)
+    },
+  })
 
   const onSubmitHandler: SubmitHandler<Inputs> = (data) => {
     console.log(data.email)
     console.log(data.password)
+    mutate(data)
   }
 
   console.log(errors)

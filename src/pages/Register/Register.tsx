@@ -25,7 +25,7 @@ const Register = () => {
     mutationFn: (data: Omit<Inputs, 'confirmPassword'>) => registerUser(data),
     onSuccess: (data) => {
       toast.success(`User ${data.user.email} registered successfully`)
-      loginUserContext({ email: data.user.email, id: 1, accessToken: data.accessToken })
+      loginUserContext({ email: data.user.email, id: data.user.id, accessToken: data.accessToken })
     },
     onError: (error) => {
       toast.error(error.message)

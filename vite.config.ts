@@ -10,7 +10,7 @@ export default defineConfig({
   plugins: [react(), babel({ presets: [reactCompilerPreset()] }), tailwindcss()],
   server: {
     watch: {
-      ignored: ['./db.json'],
+      ignored: ['**/db.json'],
     },
   },
   resolve: {
