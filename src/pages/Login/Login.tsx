@@ -10,6 +10,7 @@ import { useAuthContext } from '@/context/auth-context'
 import { useMutation } from '@tanstack/react-query'
 import { loginUser } from '@/api/users'
 import { toast } from 'react-toastify'
+import { useLocation, useNavigate } from 'react-router'
 
 z.config(fr())
 const schema = z.object({
@@ -28,13 +29,16 @@ const Login = () => {
     resolver: zodResolver(schema),
   })
   const { loginUserContext } = useAuthContext()
+  const location = useLocation()
+  const navigate = useNavigate()
 
   const { mutate } = useMutation({
     mutationKey: ['login'],
     mutationFn: (data: Inputs) => loginUser(data),
     onSuccess: (data) => {
-      toast.success(`User ${data.user.email} logged successfully`)
+      const nextRoute = location.state?.from ?? '/profile'
       loginUserContext({ email: data.user.email, id: data.user.id, accessToken: data.accessToken })
+      navigate(nextRoute, { replace: true })
     },
     onError: (error) => {
       toast.error(error.message)

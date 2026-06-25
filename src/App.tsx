@@ -14,6 +14,8 @@ import Battle from './pages/Battle/Battle'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import AuthContextProvider from './providers/AuthContextProvider'
 import Profile from './pages/Profile/Profile'
+import PrivateRoute from './hoc/PrivateRoute'
+import Logout from './pages/Logout/Logout'
 
 const queryClient = new QueryClient()
 
@@ -30,14 +32,17 @@ function App() {
                   <Route path='/heroes' element={<HeroesList />} />
                   <Route path='/squad' element={<Squad />} />
                   <Route path='/battle' element={<Battle />} />
-                  <Route path='/profile' element={<Profile />} />
                   <Route path='/learning'>
                     <Route path='useState' element={<LearnUseState />} />
                     <Route path='useEffect' element={<LearnUseEffect />} />
                     <Route path='useRef' element={<LearnUseRef />} />
                   </Route>
+                  <Route element={<PrivateRoute />}>
+                    <Route path='/profile' element={<Profile />} />
+                  </Route>
                   <Route path='/login' element={<Login />} />
                   <Route path='/register' element={<Register />} />
+                  <Route path='/logout' element={<Logout />} />
                 </Route>
               </Routes>
             </BrowserRouter>
