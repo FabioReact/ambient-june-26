@@ -61,7 +61,7 @@ const Navigation = () => {
               if (link.visibility === LinkVisibility.NOT_AUTHENTICATED && !connected) return true
             })
             .map((link) => (
-              <NavLink to={link.to} className={getActiveClassNames}>
+              <NavLink key={link.to} to={link.to} className={getActiveClassNames}>
                 {link.label}
               </NavLink>
             ))}
